@@ -132,9 +132,9 @@ syntax-highlight: True
 ############
 
 events:
-  - image: "/img/timeline/spidertocat.png"
+  - image: "/img/timeline/exploride.png"
     date: "March 2016 - Today"
-    description: "Saving the neighborhood!"
+    description: "Firmware Lead in Exploride"
   - image: "/img/timeline/baracktocat.jpg"
     date: "November 2013 - February 2016"
     description: "Started coding"
@@ -186,9 +186,9 @@ err-404-img: "/img/labtocat.png"
 # GPG on Keybase #
 ##################
 
-keybase-username: johnsmith
-keybase-in-social: True
-keybase-in-footer: True
+# keybase-username: johnsmith
+# keybase-in-social: True
+# keybase-in-footer: True
 
 ################################################################################
 
