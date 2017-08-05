@@ -41,7 +41,7 @@ favicon: "/img/favicon.ico"
 
 black-favicon: "/img/black-lab-glass.ico"
 
-background-img: "../img/intro-bg.jpg"
+background-img: "../img/mirror-light-black-glass.jpg"
 
 ##############################
 # Dynamic Text on the Header #
@@ -135,9 +135,9 @@ events:
   - image: "/img/timeline/exploride.png"
     date: "March 2016 - Today"
     description: "Firmware Lead in Exploride"
-  - image: "/img/timeline/baracktocat.jpg"
+  - image: "/img/timeline/neyya.png"
     date: "November 2013 - February 2016"
-    description: "Started coding"
+    description: "Developed firmware for Fin/Neyya"
 
 # First image of the Timeline
 
