@@ -1,7 +1,9 @@
-yout: post
+---
+layout: post
+section-type: post
 title: Getting started with AOSP
-date: 2017-09-08 16:00:00
-description: How to setup development environment on Linux for AOSP (Android Open Source Project)
+category: tech
+tags: [ 'android' ]
 ---
 
 $ repo init -u https://android.googlesource.com/platform/manifest -b android-7.1.2_r19

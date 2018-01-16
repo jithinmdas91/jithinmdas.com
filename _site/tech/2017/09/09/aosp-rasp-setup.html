@@ -17,8 +17,8 @@
   <meta name="description" content="Blog and website of Jithin M Das, blogging mainly for tech. Opinions expressed are mine.">
   <meta name="author" content="Jithin M Das">
   <meta name="keywords" content="jithimdas, jithin, personal, fin, exploride, neyya">
-  <link rel="canonical" href="/2017/10/07/aosp-rasp-setup-2.html">
-  <title>Jithin M Das | Aosp Rasp Setup 2</title>
+  <link rel="canonical" href="/tech/2017/09/09/aosp-rasp-setup.html">
+  <title>Jithin M Das | Getting started with AOSP</title>
 
   <!-- Bootstrap Core CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -75,6 +75,12 @@
 
 
   
+
+
+  <!-- Syntax highlight in post pages -->
+
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/styles/monokai_sublime.min.css">
+
 
 
 
@@ -159,8 +165,12 @@
     <i id="hand-swipe" class="fa fa-hand-o-up"></i>
     <p><strong>
     
+      Did you know that you can navigate the posts by swiping left and right?
+    
     </strong></p>
     <button type="button" class="btn btn-default ok-btn close-swipe-instruction">
+      
+        Awesome!
       
     </button>
   </div>
@@ -169,53 +179,99 @@
 <!-- Swipe Instructions End -->
 
 
-          <h1><strong>Aosp Rasp Setup 2</strong></h1>
+          <h1><strong>Getting started with AOSP</strong></h1>
           <h4>
-            <strong>07 Oct 2017</strong>
+            <strong>09 Sep 2017</strong>
             <small>
               . category:
-              <a class="category" href="/categories/.html">
-                
+              <a class="category" href="/categories/tech.html">
+                tech
               </a>.
-              <a href="/2017/10/07/aosp-rasp-setup-2.html#disqus_thread">Comments</a>
+              <a href="/tech/2017/09/09/aosp-rasp-setup.html#disqus_thread">Comments</a>
               <br />
+              
+                <a class="tag" href="/tags/android.html">#android</a>
               
             </small>
           </h4>
 
           <section class="text-justify">
-            <p>yout: post
-title: Getting started with AOSP
-date: 2017-09-08 16:00:00
-description: How to setup development environment on Linux for AOSP (Android Open Source Project)
-—</p>
+            <h4 id="hardware-requirements"><strong>Hardware requirements</strong></h4>
 
-<p>$ repo init -u https://android.googlesource.com/platform/manifest -b android-7.1.2_r19
- $ git clone https://github.com/android-rpi/local_manifests .repo/local_manifests
- $ repo sync</p>
+<p>Minimal requirements needed for your workstation.</p>
 
-<p>git clone https://github.com/android-rpi/local_manifests .repo/local_manifests
-repo sync –force-sync</p>
+<ol>
+  <li>64-bit environment</li>
+  <li>At least 100GB of disk space. If you conduct multiple builds you will need more space.</li>
+  <li>At least 4GB of RAM</li>
+</ol>
 
-<h1 id="build-kernel">Build Kernel</h1>
-<p>Install gcc-arm-linux-gnueabihf
- $ sudo apt-get install gcc-arm-linux-gnueabihf`
- $ cd kernel/rpi
- $ ARCH=arm scripts/kconfig/merge_config.sh arch/arm/configs/bcm2709_defconfig android/configs/android-base.cfg android/configs/android-recommended.cfg
- $ ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make zImage	# This didn’t work because of CROSS_COMPILE is not proper
- $ ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make dtbs</p>
+<h4 id="software-requirements"><strong>Software requirements</strong></h4>
 
-<h1 id="install-python-mako-module">Install python mako module</h1>
-<p>sudo apt-get install python-mako</p>
+<p>You can build Android on Linux or Mac. But I prefer Linux specifically Ubuntu LTS(Long Term Support), because AOSP master branch is developed and tested on Ubuntu LTS. So software requirements are,</p>
 
-<h1 id="patch-framework-source-">Patch framework source :</h1>
-<p>https://github.com/android-rpi/device_brcm_rpi3/wiki#use-hal_pixel_format_bgra_8888</p>
+<ol>
+  <li>OS - Ubuntu 12.04/14.04</li>
+  <li>Java Development Kit(JDK) - OpenJDK 7</li>
+  <li>Python 2.7</li>
+  <li>GNU Make 3.82</li>
+  <li>Git 1.7 or newer</li>
+</ol>
 
-<h1 id="build-android-source">Build Android source</h1>
-<p>Continue build with http://source.android.com/source/building.html
- $ source build/envsetup.sh
- $ lunch rpi3-eng
- $ make ramdisk systemimage</p>
+<h3 id="setting-up-build-environment">Setting up build environment</h3>
+<h4 id="installing-jdk"><strong>Installing JDK</strong></h4>
+
+<p>Since we are using Linux, I will give instructions to install the OpenJDK. Install OpenJDK using below commands.</p>
+<pre><code data-trim="" class="bash">
+$ sudo apt-get update
+$ sudo apt-get install openjdk-7-jdk
+</code></pre>
+
+<p>Update the default Java version by running</p>
+<pre><code data-trim="" class="bash">
+$ sudo update-alternatives --config java
+$ sudo update-alternatives --config javac
+</code></pre>
+
+<p><br /></p>
+<h4 id="install-required-packages"><strong>Install required packages</strong></h4>
+<pre><code data-trim="" class="bash">
+$ sudo apt-get -y install git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib 
+$ sudo apt-get -y install libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev ccache libgl1-mesa-dev libxml2-utils 
+$ sudo apt-get -y install xsltproc unzip mtd-utils u-boot-tools lzop liblzo2-2 liblzo2-dev zlib1g-dev liblz-dev uuid uuid-dev
+</code></pre>
+
+<p><br /></p>
+<h3 id="downloading-the-source">Downloading the source</h3>
+<h4 id="installing-repo"><strong>Installing Repo</strong></h4>
+<p>Repo is a tool which is used to handle a number of Git repositories. Repo is developed for handling the Android Development.</p>
+
+<p>To install Repo,</p>
+<ol>
+<li>Make a bin directory in your home directory</li>
+<pre><code data-trim="" class="bash">
+$ mkdir ~/bin
+$ PATH=~/bin:$PATH
+</code></pre>
+
+<li>Download Repo tool and give needed permissions</li>
+<pre><code data-trim="" class="bash">
+$ curl https://storage.googleapis.com/git-repo-downloads/repo &gt; ~/bin/repo
+$ chmod a+x ~/bin/repo
+</code></pre>
+
+<li>Initialize repo client</li>
+<pre><code data-trim="" class="bash">
+$ mkdir ~/working_directory
+$ cd ~/working_directory/
+$ mkdir my_android
+$ cd my_android/ 
+$ repo init -u https://android.googlesource.com/platform/manifest -b  android-6.0.1_r3
+$ repo sync
+</code></pre>
+</ol>
+
+<p>repo sync will take some time to execute, because it is downloading whole source of Android OS. It will be nearly 50GB - 60GB. So you can have a tea break. Once the repo sync is executed then you have the Android Source.</p>
 
           </section>
 
@@ -225,7 +281,7 @@ repo sync –force-sync</p>
   <ul class="rrssb-buttons clearfix">
     
       <li class="rrssb-email">
-        <a href="mailto:?subject=Aosp Rasp Setup 2&body=http://localhost:4000/2017/10/07/aosp-rasp-setup-2.html" data-proofer-ignore>
+        <a href="mailto:?subject=Getting started with AOSP&body=www.jithinmdas.com/tech/2017/09/09/aosp-rasp-setup.html" data-proofer-ignore>
           <span class="rrssb-icon">
             <svg xmlns="https://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
               <path d="M20.11 26.147c-2.335 1.05-4.36 1.4-7.124 1.4C6.524 27.548.84 22.916.84 15.284.84 7.343 6.602.45 15.4.45c6.854 0 11.8 4.7 11.8 11.252 0 5.684-3.193 9.265-7.398 9.3-1.83 0-3.153-.934-3.347-2.997h-.077c-1.208 1.986-2.96 2.997-5.023 2.997-2.532 0-4.36-1.868-4.36-5.062 0-4.75 3.503-9.07 9.11-9.07 1.713 0 3.7.4 4.6.972l-1.17 7.203c-.387 2.298-.115 3.3 1 3.4 1.674 0 3.774-2.102 3.774-6.58 0-5.06-3.27-8.994-9.304-8.994C9.05 2.87 3.83 7.545 3.83 14.97c0 6.5 4.2 10.2 10 10.202 1.987 0 4.09-.43 5.647-1.245l.634 2.22zM16.647 10.1c-.31-.078-.7-.155-1.207-.155-2.572 0-4.596 2.53-4.596 5.53 0 1.5.7 2.4 1.9 2.4 1.44 0 2.96-1.83 3.31-4.088l.592-3.72z"
@@ -238,7 +294,7 @@ repo sync –force-sync</p>
     
     
       <li class="rrssb-facebook">
-        <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/2017/10/07/aosp-rasp-setup-2.html&title=Aosp Rasp Setup 2" class="popup">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=www.jithinmdas.com/tech/2017/09/09/aosp-rasp-setup.html&title=Getting started with AOSP" class="popup">
           <span class="rrssb-icon">
             <svg xmlns="https://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" width="29" height="29" viewBox="0 0 29 29"><path d="M26.4 0H2.6C1.714 0 0 1.715 0 2.6v23.8c0 .884 1.715 2.6 2.6 2.6h12.393V17.988h-3.996v-3.98h3.997v-3.062c0-3.746 2.835-5.97 6.177-5.97 1.6 0 2.444.173 2.845.226v3.792H21.18c-1.817 0-2.156.9-2.156 2.168v2.847h5.045l-.66 3.978h-4.386V29H26.4c.884 0 2.6-1.716 2.6-2.6V2.6c0-.885-1.716-2.6-2.6-2.6z"
               class="cls-2" fill-rule="evenodd"/></svg>
@@ -249,7 +305,7 @@ repo sync –force-sync</p>
     
     
       <li class="rrssb-twitter">
-        <a href="https://twitter.com/share?url=http://localhost:4000/2017/10/07/aosp-rasp-setup-2.html&text=Aosp Rasp Setup 2"
+        <a href="https://twitter.com/share?url=www.jithinmdas.com/tech/2017/09/09/aosp-rasp-setup.html&text=Getting started with AOSP"
         class="popup">
           <span class="rrssb-icon"><svg xmlns="https://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><path d="M24.253 8.756C24.69 17.08 18.297 24.182 9.97 24.62c-3.122.162-6.22-.646-8.86-2.32 2.702.18 5.375-.648 7.507-2.32-2.072-.248-3.818-1.662-4.49-3.64.802.13 1.62.077 2.4-.154-2.482-.466-4.312-2.586-4.412-5.11.688.276 1.426.408 2.168.387-2.135-1.65-2.73-4.62-1.394-6.965C5.574 7.816 9.54 9.84 13.802 10.07c-.842-2.738.694-5.64 3.434-6.48 2.018-.624 4.212.043 5.546 1.682 1.186-.213 2.318-.662 3.33-1.317-.386 1.256-1.248 2.312-2.4 2.942 1.048-.106 2.07-.394 3.02-.85-.458 1.182-1.343 2.15-2.48 2.71z"/></svg></span>
           <span class="rrssb-text">twitter</span>
@@ -258,7 +314,7 @@ repo sync –force-sync</p>
     
     
       <li class="rrssb-linkedin">
-      <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/2017/10/07/aosp-rasp-setup-2.html" class="popup">
+      <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=www.jithinmdas.com/tech/2017/09/09/aosp-rasp-setup.html" class="popup">
         <span class="rrssb-icon">
           <svg xmlns="https://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
             <path d="M25.424 15.887v8.447h-4.896v-7.882c0-1.98-.71-3.33-2.48-3.33-1.354 0-2.158.91-2.514 1.802-.13.315-.162.753-.162 1.194v8.216h-4.9s.067-13.35 0-14.73h4.9v2.087c-.01.017-.023.033-.033.05h.032v-.05c.65-1.002 1.812-2.435 4.414-2.435 3.222 0 5.638 2.106 5.638 6.632zM5.348 2.5c-1.676 0-2.772 1.093-2.772 2.54 0 1.42 1.066 2.538 2.717 2.546h.032c1.71 0 2.77-1.132 2.77-2.546C8.056 3.593 7.02 2.5 5.344 2.5h.005zm-2.48 21.834h4.896V9.604H2.867v14.73z"
@@ -280,6 +336,14 @@ repo sync –force-sync</p>
 
 <!-- Share Buttons End -->
 
+
+          
+            
+<!-- Disqus Comments Start -->
+
+
+
+<!-- Disqus Comments End -->
 
           
 
@@ -359,9 +423,41 @@ $(window).scroll(toggleNavCollapse);$(function(){$("a.page-scroll").bind("click"
 
 
 
+  <!-- Syntax highlight in post pages-->
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
 
 
 
+
+  
+
+  <!-- Google Tracking Id Start -->
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+  <!-- Google Tracking Id End -->
+
+  
+
+
+
+
+
+
+  <!-- Share buttons Start -->
+
+  <script src="/js/rrssb.min.js"></script>
+
+  <!-- Share buttons End -->
 
 
 
@@ -370,7 +466,7 @@ $(window).scroll(toggleNavCollapse);$(function(){$("a.page-scroll").bind("click"
 <script>
 function addTohistory() {
   if (!window.location.host.startsWith("127.0.0.1")) {
-    history.pushState({}, 'Aosp Rasp Setup 2', 'http://localhost:4000/2017/10/07/aosp-rasp-setup-2.html');
+    history.pushState({}, 'Getting started with AOSP', 'www.jithinmdas.com/tech/2017/09/09/aosp-rasp-setup.html');
   }
 }
 </script>
@@ -380,9 +476,53 @@ function addTohistory() {
 
   
 
+    <!-- Post Gesture Navigation Start -->
+
+    <script type="text/javascript" src="/js/hammer.min.js"></script>
+
+    <script>
+      var post = document.getElementById('post');
+
+      new Hammer(post).on('swipeleft', function(event) {
+        addTohistory();
+        
+          document.location.replace("/tech/2017/07/02/setup_nrf5x_linux.html");
+        
+      });
+
+      new Hammer(post).on('swiperight', function(event) {
+        addTohistory();
+        
+          document.location.replace("/");
+        
+      });
+    </script>
+
+    <!-- Post Gesture Navigation Start -->
+
   
 
   
+
+  
+
+  
+
+    <!-- Swipe Instructions for Post Start -->
+
+    <script>
+      $(document).ready(function(){
+        if(!localStorage.getItem('post-swipeshowed')){
+          $("#swipe-instruction").fadeIn();
+          $("#swipe-instruction .close-swipe-instruction").click(function(){
+            $("#swipe-instruction").fadeOut();
+          });
+          localStorage.setItem('post-swipeshowed', true);
+        }
+      });
+    </script>
+
+    <!-- Swipe Instructions for Post End -->
 
   
 

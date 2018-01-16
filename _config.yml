@@ -34,6 +34,7 @@ title: "Jithin M Das"
 description: "Blog and website of Jithin M Das, blogging mainly for tech. Opinions expressed are mine."
 keywords: "jithimdas, jithin, personal, fin, exploride, neyya"
 favicon: "/img/favicon.ico"
+err-404-img: "/img/labtocat.png"
 
 ################
 # Header layout #
@@ -108,9 +109,9 @@ icon-192p: "/img/web-app/icon-192p.png"
 
 enable-gesture-navigation: True
 
-post-preview-words: 96
+post-preview-words: 45
 
-paginate: 5
+paginate: 10
 
 email-share: True
 fb-share: True

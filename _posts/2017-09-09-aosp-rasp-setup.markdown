@@ -1,8 +1,9 @@
 ---
 layout: post
+section-type: post
 title: Getting started with AOSP
-date: 2017-09-08 16:00:00
-description: How to setup development environment on Linux for AOSP (Android Open Source Project)
+category: tech
+tags: [ 'android' ]
 ---
 
 #### **Hardware requirements**
@@ -24,53 +25,56 @@ You can build Android on Linux or Mac. But I prefer Linux specifically Ubuntu LT
 5. Git 1.7 or newer
 
 ### Setting up build environment
-<br/>
 #### **Installing JDK**
 
 Since we are using Linux, I will give instructions to install the OpenJDK. Install OpenJDK using below commands.
-{% highlight bash %}
+<pre><code data-trim class="bash">
 $ sudo apt-get update
 $ sudo apt-get install openjdk-7-jdk
-{% endhighlight %}
+</code></pre>
 
 Update the default Java version by running
-{% highlight bash %}
+<pre><code data-trim class="bash">
 $ sudo update-alternatives --config java
 $ sudo update-alternatives --config javac
-{% endhighlight %}
+</code></pre>
 
+<br/>
 #### **Install required packages**
-{% highlight bash %}
+<pre><code data-trim class="bash">
 $ sudo apt-get -y install git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib 
 $ sudo apt-get -y install libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev ccache libgl1-mesa-dev libxml2-utils 
 $ sudo apt-get -y install xsltproc unzip mtd-utils u-boot-tools lzop liblzo2-2 liblzo2-dev zlib1g-dev liblz-dev uuid uuid-dev
-{% endhighlight %}
+</code></pre>
 
-### Downloading the source
 <br/>
+### Downloading the source
 #### **Installing Repo**
 Repo is a tool which is used to handle a number of Git repositories. Repo is developed for handling the Android Development. 
 
 To install Repo,
-1. Make a bin directory in your home directory
-{% highlight bash %}
+<ol>
+<li>Make a bin directory in your home directory</li>
+<pre><code data-trim class="bash">
 $ mkdir ~/bin
 $ PATH=~/bin:$PATH
-{% endhighlight %}
+</code></pre>
 
-2. Download Repo tool and give needed permissions
-{% highlight bash %}
+<li>Download Repo tool and give needed permissions</li>
+<pre><code data-trim class="bash">
 $ curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
 $ chmod a+x ~/bin/repo
-{% endhighlight %}
+</code></pre>
 
-3. Initialize repo client
-{% highlight bash %}
+<li>Initialize repo client</li>
+<pre><code data-trim class="bash">
 $ mkdir ~/working_directory
 $ cd ~/working_directory/
 $ mkdir my_android
 $ cd my_android/ 
 $ repo init -u https://android.googlesource.com/platform/manifest -b  android-6.0.1_r3
 $ repo sync
-{% endhighlight %}
+</code></pre>
+</ol>
+
 repo sync will take some time to execute, because it is downloading whole source of Android OS. It will be nearly 50GB - 60GB. So you can have a tea break. Once the repo sync is executed then you have the Android Source. 
