@@ -1,0 +1,32 @@
+yout: post
+title: Getting started with AOSP
+date: 2017-09-08 16:00:00
+description: How to setup development environment on Linux for AOSP (Android Open Source Project)
+---
+
+$ repo init -u https://android.googlesource.com/platform/manifest -b android-7.1.2_r19
+ $ git clone https://github.com/android-rpi/local_manifests .repo/local_manifests
+ $ repo sync
+
+git clone https://github.com/android-rpi/local_manifests .repo/local_manifests
+repo sync --force-sync
+
+# Build Kernel
+ Install gcc-arm-linux-gnueabihf
+ $ sudo apt-get install gcc-arm-linux-gnueabihf`
+ $ cd kernel/rpi
+ $ ARCH=arm scripts/kconfig/merge_config.sh arch/arm/configs/bcm2709_defconfig android/configs/android-base.cfg android/configs/android-recommended.cfg
+ $ ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make zImage	# This didn't work because of CROSS_COMPILE is not proper
+ $ ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make dtbs
+
+# Install python mako module
+  sudo apt-get install python-mako
+
+# Patch framework source :
+  https://github.com/android-rpi/device_brcm_rpi3/wiki#use-hal_pixel_format_bgra_8888
+
+# Build Android source
+ Continue build with http://source.android.com/source/building.html
+ $ source build/envsetup.sh
+ $ lunch rpi3-eng
+ $ make ramdisk systemimage

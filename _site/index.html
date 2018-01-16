@@ -119,6 +119,10 @@
             </li>
           
             <li>
+              <a class="page-scroll" href="#latest-post"> Blog </a>
+            </li>
+          
+            <li>
               <a class="page-scroll" href="#timeline"> Timeline </a>
             </li>
           
@@ -225,7 +229,83 @@ If you want to have a static message in your intro layout, disable the dynamic-t
       
         
       
+        
+      
+        
+      
     
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+<!-- Latest Post Preview Start -->
+
+<section id="latest-post" class="container content-section text-center">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+
+        <h2 id="latest-blog-post">Latest Blog Post</h2>
+
+
+        
+        <h4> <strong> 07 Oct 2017 </strong>
+          <small>.
+            <a class="category" href="/categories/.html">
+              
+            </a>
+          .</small>
+          <strong> <a href="/2017/10/07/aosp-rasp-setup-2.html">Aosp Rasp Setup 2 </a> </strong>
+          <small> <a href="/2017/10/07/aosp-rasp-setup-2.html#disqus_thread">Comments</a></small>
+        </h4>
+
+        <section class="text-justify">
+          <p>yout: post title: Getting started with AOSP date: 2017-09-08 16:00:00 description: How to setup development environment on Linux for AOSP (Android Open Source Project) —</p> <p>$ repo init -u https://android.googlesource.com/platform/manifest -b android-7.1.2_r19 $ git clone https://github.com/android-rpi/local_manifests .repo/local_manifests $ repo sync</p> <p>git clone https://github.com/android-rpi/local_manifests .repo/local_manifests repo sync –force-sync</p> <p>Build Kernel Install gcc-arm-linux-gnueabihf $ sudo apt-get install gcc-arm-linux-gnueabihf` $ cd kernel/rpi $ ARCH=arm scripts/kconfig/merge_config.sh arch/arm/configs/bcm2709_defconfig android/configs/android-base.cfg android/configs/android-recommended.cfg $ ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make zImage # This didn’t work because of CROSS_COMPILE is not proper $ ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- make dtbs</p> <p>Install python mako module sudo apt-get install python-mako</p> <p>Patch framework source...
+        </section>
+
+        <h4><a href="/blog/">Archive</a></h4>
+
+      </div>
+    </div>
+</section>
+
+<!-- Latest Post Preview End -->
+
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+      
+        
       
         
       
@@ -326,6 +406,8 @@ If you want to have a static message in your intro layout, disable the dynamic-t
       
         
       
+        
+      
     
       
         
@@ -370,6 +452,10 @@ If you want to have a static message in your intro layout, disable the dynamic-t
 
 <!-- Contact End -->
 
+        
+      
+        
+      
         
       
         
